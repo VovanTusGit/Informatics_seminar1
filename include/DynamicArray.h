@@ -1,0 +1,26 @@
+#pragma once
+
+#include <cstddef>
+
+class DynamicArray {
+private:
+    int* data;
+    size_t size;
+    size_t new_size;
+
+public:
+    bool push_back(int value);
+    
+    void add(const DynamicArray& other);
+    void sub(const DynamicArray& other);
+
+    explicit DynamicArray(size_t n);
+    DynamicArray(const DynamicArray& other);
+    ~DynamicArray();
+
+    void print() const;
+    int get(size_t index) const;
+    void set(size_t index, int value);
+
+    size_t getSize() const;
+};

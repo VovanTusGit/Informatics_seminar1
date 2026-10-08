@@ -2,12 +2,12 @@
 #include <iostream>
 #include <stdexcept>
 
-DynamicArray::DynamicArray(size_t n) : size(n) {
+DynamicArray::DynamicArray(size_t n) : size(n), new_size(n){
     if (size == 0) {
         data = nullptr;
         return;
     }
-    data = new int[size]();
+    data = new int[new_size]();
 }
 
 DynamicArray::~DynamicArray() {
@@ -45,13 +45,40 @@ size_t DynamicArray::getSize() const {
     return size;
 }
 
-DynamicArray::DynamicArray(const DynamicArray& other) : size(other.size) {
+DynamicArray::DynamicArray(const DynamicArray& other) : size(other.size), new_size(other.new_size) {
     if(size == 0){
         data = nullptr;
         return;
     }
-    data = new int[size];
+    data = new int[new_size];
     for(size_t i = 0; i < size; i++){
         data[i] = other.data[i];
     }
+}
+
+bool DynamicArray::push_back(int value){
+    if(value < -100 || value > 100){
+        std::cerr << "Error: Value " << value << " is out of range [-100, 100]" << std::endl;
+        return false;
+    }
+
+    if(size >= new_size){
+        size_t final_size = (new_size) ? 1 : new_size * 2;
+
+        int* new_data = new int[final_size];
+
+        for(size_t i = 0; i < size; i++){
+            new_data[i] = data[i];
+        }
+
+        delete[] data;
+
+        data = new_data;
+        new_size = final_size;
+    }
+
+    data[size] = value;
+    ++size;
+
+    return true;
 }

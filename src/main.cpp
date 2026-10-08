@@ -2,18 +2,11 @@
 #include <iostream>
 
 int main() {
-    DynamicArray arr1(5);
-    arr1.set(0, 10);
-    arr1.set(1, -50);
+    DynamicArray arr1(2);
 
-    DynamicArray arr2 = arr1;
+    arr1.push_back(67);
+    arr1.push_back(69);
 
-    arr2.set(0, 67);
-    
-    std::cout << "arr1: ";
-    arr1.print();
-
-    std::cout << "\narr2: ";
-    arr2.print();
+    arr1.push_back(1);
     return 0;
 }

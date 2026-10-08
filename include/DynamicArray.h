@@ -6,8 +6,11 @@ class DynamicArray {
 private:
     int* data;
     size_t size;
+    size_t new_size;
 
 public:
+    bool push_back(int value);
+
     explicit DynamicArray(size_t n);
     DynamicArray(const DynamicArray& other);
     ~DynamicArray();

@@ -10,6 +10,9 @@ private:
 
 public:
     bool push_back(int value);
+    
+    void add(const DynamicArray& other);
+    void sub(const DynamicArray& other);
 
     explicit DynamicArray(size_t n);
     DynamicArray(const DynamicArray& other);

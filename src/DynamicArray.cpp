@@ -82,3 +82,17 @@ bool DynamicArray::push_back(int value){
 
     return true;
 }
+
+void DynamicArray::add(const DynamicArray& other){
+    for(size_t i = 0; i < size; i++) {
+        int val = (i < other.size) ? other.data[i] : 0;
+        data[i] += val;
+    }
+}
+
+void DynamicArray::sub(const DynamicArray& other){
+    for(size_t i = 0; i < size; i++) {
+        int val = (i < other.size) ? other.data[i] : 0;
+        data[i] -= val;
+    }
+}

@@ -32,10 +32,10 @@ int DynamicArray::get(size_t index) const {
 }
 
 void DynamicArray::set(size_t index, int value) {
-    if (index >= size) {
+    if(index >= size){
         throw std::out_of_range("Index out of bounds");
     }
-    if (value < -100 || value > 100) {
+    if(value < -100 || value > 100){
         throw std::range_error("Value must be in range [-100, 100]");
     }
     data[index] = value;
@@ -43,4 +43,15 @@ void DynamicArray::set(size_t index, int value) {
 
 size_t DynamicArray::getSize() const {
     return size;
+}
+
+DynamicArray::DynamicArray(const DynamicArray& other) : size(other.size) {
+    if(size == 0){
+        data = nullptr;
+        return;
+    }
+    data = new int[size];
+    for(size_t i = 0; i < size; i++){
+        data[i] = other.data[i];
+    }
 }

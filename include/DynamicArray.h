@@ -9,6 +9,7 @@ private:
 
 public:
     explicit DynamicArray(size_t n);
+    DynamicArray(const DynamicArray& other);
     ~DynamicArray();
 
     void print() const;

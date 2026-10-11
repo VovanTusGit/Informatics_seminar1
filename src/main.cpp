@@ -6,6 +6,15 @@ int main(){
     DynamicArray arr(5);
     arr.print();
     arr.set(0, 1);
-    std::cout << "\n";
     arr.print();
+
+    std::cout << "\n=== Задание 2 ===\n";
+    DynamicArray b(arr);
+    b.set(1, 2);
+    arr.print();
+    b.print();
+
+    std::cout << "\n=== Задание 3 ===\n";
+    b.push_back(6);
+    b.print();
 }

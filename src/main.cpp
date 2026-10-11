@@ -17,4 +17,10 @@ int main(){
     std::cout << "\n=== Задание 3 ===\n";
     b.push_back(6);
     b.print();
+
+    std::cout << "\n=== Задание 4 ===\n";
+    b.sub(arr);
+    b.print();
+    b.add(arr);
+    b.print();
 }

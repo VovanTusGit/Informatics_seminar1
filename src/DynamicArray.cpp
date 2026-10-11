@@ -57,3 +57,19 @@ void DynamicArray::push_back(int value){
 
     data[size-1] = value;
 }
+
+void DynamicArray::add(const DynamicArray& other){
+    size_t min_size = (size < other.size) ? size : other.size;
+
+    for(size_t i = 0; i < min_size; i++){
+        data[i] += other.data[i];
+    }
+}
+
+void DynamicArray::sub(const DynamicArray& other){
+    size_t min_size = (size < other.size) ? size : other.size;
+
+    for(size_t i = 0; i < min_size; i++){
+        data[i] -= other.data[i];
+    }
+}

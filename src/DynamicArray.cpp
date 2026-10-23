@@ -31,7 +31,7 @@ void DynamicArray::set(size_t index, int value){
         throw std::out_of_range("Index out of bounds");
     }
     if(value < -100 || value > 100){
-        throw std::range_error("Value must be in range [-100, 100]");
+        throw std::invalid_argument("Value must be in range[-100,100]");
     }
     data[index] = value;
 }
@@ -45,7 +45,7 @@ int DynamicArray::get(size_t index){
 
 void DynamicArray::push_back(int value){
     if(value < -100 || value > 100){
-        throw std::range_error("Value must be in range [-100, 100]");
+        throw std::invalid_argument("Value must be in range[-100,100]");
     }
     size++;
     int* new_data = new int[size]();

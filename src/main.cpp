@@ -3,7 +3,9 @@
 
 int main(){
     std::cout << "=== Задание 1 ===\n";
-    DynamicArray arr(5);
+    DynamicArray<double> arr(5);
+    arr.set(0, 50);
+    arr.set(1, -20);
     arr.print();
     try{
         arr.set(0, 101);
@@ -20,9 +22,9 @@ int main(){
     arr.print();
 
     std::cout << "\n=== Задание 2 ===\n";
-    DynamicArray b(arr);
+    DynamicArray<double> b(arr);
     try{
-        DynamicArray c(10000000000000);
+        DynamicArray<int> c(10000000000000);
     }catch(const std::bad_alloc& err){
         std::cerr << "Ошибка: " << err.what() << "\n";
     }

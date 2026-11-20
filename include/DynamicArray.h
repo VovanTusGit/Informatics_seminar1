@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <cstddef>
@@ -13,6 +14,28 @@ private:
     T* data;
     size_t size;
 public:
+    class Reference {
+    private:
+        DynamicArray& array;
+        size_t index;
+
+    public:
+        Reference(DynamicArray& arr, size_t i) : array(arr), index(i) {}
+
+        operator T() const {
+            return array.data[index];
+        }
+
+        Reference& operator=(const T& value) {
+            array.set(index, value);
+            return *this;
+        }
+
+        Reference& operator=(const Reference& other) {
+            return *this = static_cast<T>(other);
+        }
+    };
+
     DynamicArray(size_t len);
     ~DynamicArray();
 
@@ -38,6 +61,82 @@ public:
         }
         out << "]";
         return out;
+    }
+
+    Reference operator[](size_t index) {
+    if (index >= size)
+        throw std::out_of_range("Index out of bounds");
+
+    return Reference(*this, index);
+    }
+
+    const T& operator[](size_t index) const {
+        if (index >= size)
+            throw std::out_of_range("Index out of bounds");
+
+        return data[index];
+    }
+
+    bool operator==(const DynamicArray& other) const {
+        if (size != other.size)
+            return false;
+
+        for (size_t i = 0; i < size; i++) {
+            if (data[i] != other.data[i])
+                return false;
+        }
+
+        return true;
+    }
+
+    bool operator!=(const DynamicArray& other) const {
+        return !(*this == other);
+    }
+
+    DynamicArray& operator+=(const DynamicArray& other) {
+        for (size_t i = 0; i < size; i++) {
+            if (i < other.size)
+                data[i] += other.data[i];
+        }
+        return *this;
+    }
+
+    DynamicArray& operator+=(T value) {
+        for (size_t i = 0; i < size; i++)
+            data[i] += value;
+
+        return *this;
+    }
+
+    DynamicArray& operator-=(const DynamicArray& other) {
+        for (size_t i = 0; i < size; i++) {
+            if (i < other.size)
+                data[i] -= other.data[i];
+        }
+        return *this;
+    }
+
+    DynamicArray& operator-=(T value) {
+        for (size_t i = 0; i < size; i++)
+            data[i] -= value;
+
+        return *this;
+    }
+
+    T* begin() {
+        return data;
+    }
+
+    T* end() {
+        return data + size;
+    }
+
+    const T* begin() const {
+        return data;
+    }
+
+    const T* end() const {
+        return data + size;
     }
 };
 
@@ -81,7 +180,7 @@ void DynamicArray<T>::set(size_t index, T value){
 
 template <class T>
 T DynamicArray<T>::get(size_t index){
-    if(index > size || static_cast<int>(index) < 0){
+    if(index >= size || static_cast<int>(index) < 0){
         throw std::out_of_range("Index out of bounds");
     }
     return data[index];
@@ -140,3 +239,5 @@ double DynamicArray<T>::distance(const DynamicArray& other) const{
         throw std::bad_typeid();
     }
 }
+
+#

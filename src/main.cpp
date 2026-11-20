@@ -6,69 +6,52 @@
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
-    std::cout << "=== Проверка целочисленного массива ===\n";
-
     DynamicArray<int> numbers(3);
     numbers.set(0, 10);
     numbers.set(1, -20);
     numbers.set(2, 30);
+
     std::cout << "Массив: " << numbers << "\n";
 
-    try {
-        numbers.set(0, 150);
-    }
-    catch (const std::invalid_argument& err) {
-        std::cout << "Ошибка значения: " << err.what() << "\n";
-    }
+    numbers[0] = 50;
+    std::cout << "numbers[0] = " << numbers[0] << "\n";
 
-    std::cout << "\n=== Оператор << ===\n";
+    DynamicArray<int> copy(numbers);
+    std::cout << "Массивы равны: " << (numbers == copy) << "\n";
+    std::cout << "Массивы не равны: " << (numbers != copy) << "\n";
 
-    DynamicArray<double> first(3);
-    first.set(0, 1.0);
-    first.set(1, 2.0);
-    first.set(2, 3.0);
+    DynamicArray<int> second(3);
+    second.set(0, 1);
+    second.set(1, 2);
+    second.set(2, 3);
 
-    DynamicArray<double> second(3);
-    second.set(0, 4.0);
-    second.set(1, 5.0);
-    second.set(2, 6.0);
+    numbers += second;
+    numbers -= 5;
+    std::cout << "После арифметики: " << numbers << "\n";
 
-    std::cout << "Первый массив: " << first << "\n";
-    std::cout << "Второй массив: " << second << "\n";
+    std::cout << "Перебор массива: ";
+    for (const auto& x : numbers)
+        std::cout << x << " ";
 
-    std::cout << "\n=== Евклидово расстояние ===\n";
-    try {
-        std::cout << "Расстояние: " << first.distance(second) << "\n";
-    }
-    catch (const std::invalid_argument& err) {
-        std::cout << "Ошибка размера: " << err.what() << "\n";
-    }
+    std::cout << "\n";
 
-    std::cout << "\n=== Массивы разного размера ===\n";
-    DynamicArray<double> third(2);
-    try {
-        std::cout << first.distance(third) << "\n";
-    }
-    catch (const std::invalid_argument& err) {
-        std::cout << "Ошибка размера: " << err.what() << "\n";
-    }
+    for (auto& x : numbers) x = 10;
 
-    std::cout << "\n=== Проверка нечислового типа ===\n";
+    std::cout << "После изменения: " << numbers << "\n";
+
     DynamicArray<std::string> words(2);
     words.set(0, "Hello");
     words.set(1, "world");
-    std::cout << "Массив строк: " << words << "\n";
+    std::cout << "Строки: " << words << "\n";
 
-    try {
-        std::cout << words.distance(words) << "\n";
-    }
-    catch (const std::bad_typeid&) {
-        std::cout << "Ошибка: расстояние можно вычислять только для числовых массивов\n";
-    }
+    DynamicArray<double> a(2);
+    DynamicArray<double> b(2);
 
-    std::cout << "\n=== Проверка push_back ===\n";
-    numbers.push_back(40);
-    std::cout << "После добавления элемента: " << numbers << "\n";
+    a.set(0, 1.0);
+    a.set(1, 2.0);
+    b.set(0, 4.0);
+    b.set(1, 6.0);
 
+    std::cout << "Расстояние: " << a.distance(b) << "\n";
     return 0;
 }

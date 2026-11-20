@@ -2,56 +2,46 @@
 #include <iostream>
 #include <string>
 #include <windows.h>
+#include <utility>
+
+void show(DynamicArray<int> arr) {
+    std::cout << "В функции: " << arr << "\n";
+}
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
-    DynamicArray<int> numbers(3);
-    numbers.set(0, 10);
-    numbers.set(1, -20);
-    numbers.set(2, 30);
 
-    std::cout << "Массив: " << numbers << "\n";
+    DynamicArray<int> first(3);
+    first[0] = 10;
+    first[1] = 20;
+    first[2] = 30;
 
-    numbers[0] = 50;
-    std::cout << "numbers[0] = " << numbers[0] << "\n";
-
-    DynamicArray<int> copy(numbers);
-    std::cout << "Массивы равны: " << (numbers == copy) << "\n";
-    std::cout << "Массивы не равны: " << (numbers != copy) << "\n";
+    std::cout << "=== Копирование ===\n";
+    show(first);
+    std::cout << "Исходный массив: " << first << "\n";
 
     DynamicArray<int> second(3);
-    second.set(0, 1);
-    second.set(1, 2);
-    second.set(2, 3);
+    second[0] = 40;
+    second[1] = 50;
+    second[2] = 60;
 
-    numbers += second;
-    numbers -= 5;
-    std::cout << "После арифметики: " << numbers << "\n";
+    std::cout << "\n=== Перемещение ===\n";
+    show(std::move(second));
+    std::cout << "Исходный массив: " << second << "\n";
 
-    std::cout << "Перебор массива: ";
-    for (const auto& x : numbers)
-        std::cout << x << " ";
+    DynamicArray<int> third(2);
+    third = first;
 
-    std::cout << "\n";
+    std::cout << "\n=== Копирующее присваивание ===\n";
+    std::cout << third << "\n";
 
-    for (auto& x : numbers) x = 10;
+    DynamicArray<int> fourth(2);
+    fourth = std::move(first);
 
-    std::cout << "После изменения: " << numbers << "\n";
+    std::cout << "\n=== Move-присваивание ===\n";
+    std::cout << "Новый массив: " << fourth << "\n";
+    std::cout << "Старый массив: " << first << "\n";
 
-    DynamicArray<std::string> words(2);
-    words.set(0, "Hello");
-    words.set(1, "world");
-    std::cout << "Строки: " << words << "\n";
-
-    DynamicArray<double> a(2);
-    DynamicArray<double> b(2);
-
-    a.set(0, 1.0);
-    a.set(1, 2.0);
-    b.set(0, 4.0);
-    b.set(1, 6.0);
-
-    std::cout << "Расстояние: " << a.distance(b) << "\n";
     return 0;
 }

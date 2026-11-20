@@ -7,6 +7,7 @@
 #include <typeinfo>
 #include <cmath>
 #include <iostream>
+#include <utility>
 
 template <class T>
 class DynamicArray {
@@ -40,6 +41,10 @@ public:
     ~DynamicArray();
 
     DynamicArray(const DynamicArray& other);
+    DynamicArray& operator=(const DynamicArray& other);
+
+    DynamicArray(DynamicArray&& other);
+    DynamicArray& operator=(DynamicArray&& other);
 
     void print();
     void set(size_t index, T value);
@@ -143,6 +148,47 @@ public:
 template <class T>
 DynamicArray<T>::DynamicArray(size_t len) : size(len){
     data = new T[len]();
+}
+
+template <class T>
+DynamicArray<T>& DynamicArray<T>::operator=(const DynamicArray& other) {
+    if (this == &other)
+        return *this;
+
+    delete[] data;
+
+    size = other.size;
+    data = new T[size];
+
+    for (size_t i = 0; i < size; i++)
+        data[i] = other.data[i];
+
+    return *this;
+}
+
+template <class T>
+DynamicArray<T>::DynamicArray(DynamicArray&& other){
+    data = other.data;
+    size = other.size;
+
+    other.data = nullptr;
+    other.size = 0;
+}
+
+template <class T>
+DynamicArray<T>& DynamicArray<T>::operator=(DynamicArray&& other){
+    if (this == &other)
+        return *this;
+
+    delete[] data;
+
+    data = other.data;
+    size = other.size;
+
+    other.data = nullptr;
+    other.size = 0;
+
+    return *this;
 }
 
 template <class T>
